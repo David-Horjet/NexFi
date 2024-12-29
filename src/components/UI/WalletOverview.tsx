@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 // import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 // import { useNetworkConnection } from '@/hooks/useNetwork';
 import { processStreamEvent } from '@/utils/blockchain/streamHandler';
-import { setPortfolio } from '@/features/portfolio/portfolioSlice';
+//import { setPortfolio } from '@/features/portfolio/portfolioSlice';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { usePortfolioName } from '@/hooks/usePortfolioName';
 import { getPortfolioBalances } from '@/actions/quicknode.actions';
@@ -29,7 +29,7 @@ interface WalletState {
 
 const WalletOverview: React.FC = () => {
   // const dispatch = useDispatch();
-  const { publicKey, disconnect } = useWallet();
+  const { publicKey } = useWallet();
   // const { connection, network } = useNetworkConnection();
   const wallet = useSelector((state: { wallet: WalletState }) => state.wallet);
 
@@ -40,10 +40,9 @@ const WalletOverview: React.FC = () => {
   const [portfolioLoading, setPortfolioLoading] = useState<boolean>(false);
 
   console.log(portfolioName);
-  const walletAddress = publicKey ? publicKey.toBase58() : ""
 
 
-  if (portfolioName) {
+ // if (portfolioName) {
     useEffect(() => {
       const initializePortfolio = async () => {
         console.log("Fetching portfolio data...");
@@ -66,16 +65,16 @@ const WalletOverview: React.FC = () => {
       
               if (jupListResponse.success) {
                 // Step 1: Fetch SOL balance
-                const solBalance = response.data[0].solBalance || 0; // Assuming SOL balance is returned
-                const solPriceResponse = await fetchSolPrice();
-                const solPrice = solPriceResponse.success ? solPriceResponse.data.solana.usd : 0;
-                const solValue = solBalance * solPrice;
+                // const solBalance = response.data[0].solBalance || 0; // Assuming SOL balance is returned
+                // const solPriceResponse = await fetchSolPrice();
+                // const solPrice = solPriceResponse.success ? solPriceResponse.data.solana.usd : 0;
+                // const solValue = solBalance * solPrice;
       
-                console.log("SOL Balance:", solBalance, "SOL Price:", solPrice, "SOL Value:", solValue);
+                // console.log("SOL Balance:", solBalance, "SOL Price:", solPrice, "SOL Value:", solValue);
       
                 // Step 2: Fetch and calculate token values
                 const assets = await Promise.all(
-                  tokenResponse.data.tokens.map(async (tokenAccountInfo: any) => {
+                  tokenResponse.data.tokens.map(async (tokenAccountInfo) => {
                     const accountData = tokenAccountInfo.account.data.parsed.info;
                     const tokenMintAddress = accountData.mint;
                     const tokenBalance = accountData.tokenAmount.uiAmount || 0;
@@ -100,15 +99,17 @@ const WalletOverview: React.FC = () => {
       
                 // Step 3: Calculate total portfolio value
                 const tokenPortfolioValue = await calculatePortfolioValue(assets);
-                const totalPortfolioValue = solValue + tokenPortfolioValue;
+                const totalPortfolioValue = 0 + tokenPortfolioValue;
+
+                setTotalValue(totalPortfolioValue);
       
                 console.log("Total Portfolio Value:", totalPortfolioValue);
       
-                setPortfolio({
+                {/* setPortfolio({
                   solValue,
                   tokenAssets: assets,
                   totalValue: totalPortfolioValue,
-                });
+                }); */}
               }
             }
           }
@@ -123,7 +124,7 @@ const WalletOverview: React.FC = () => {
       initializePortfolio();
 
       // Set up QuickNode Stream Webhook Listener
-      const handleStreamEvent = (event: any) => {
+      const handleStreamEvent = (event) => {
         console.log('Stream Event:', event);
         processStreamEvent(event);
 
@@ -136,8 +137,8 @@ const WalletOverview: React.FC = () => {
       eventSource.onmessage = (e) => handleStreamEvent(JSON.parse(e.data));
 
       return () => eventSource.close();
-    }, [wallet.address]);
-  }
+    }, [wallet.address, portfolioName]);
+ // }
 
 
   return (
