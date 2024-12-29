@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useWallet } from '@solana/wallet-adapter-react';
+// import { useWallet } from '@solana/wallet-adapter-react';
 import { useSelector } from 'react-redux';
 // import { Connection, PublicKey } from '@solana/web3.js';
 // import { setWallet } from '@/features/wallet/walletSlice';
