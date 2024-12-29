@@ -71,7 +71,7 @@ export async function fetchSolPrice() {
   }
 }
 
-export async function fetchTokenData(mintAddress: string): Promise<any> {
+export async function fetchTokenData(mintAddress: string) {
     try {
       const response = await fetch(
         `https://api.dexscreener.com/latest/dex/tokens/${mintAddress}`
