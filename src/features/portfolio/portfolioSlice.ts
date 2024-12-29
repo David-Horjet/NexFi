@@ -6,15 +6,17 @@ interface SPLToken {
 }
 
 interface PortfolioState {
-  solBalance: number;
-  splTokens: SPLToken[];
-  totalValue: number;
+  solBalance?: number;
+  splTokens?: SPLToken[];
+  totalValue?: number;
+  name?: string;
 }
 
 const initialState: PortfolioState = {
   solBalance: 0,
   splTokens: [],
   totalValue: 0,
+  name: "",
 };
 
 const portfolioSlice = createSlice({

@@ -11,7 +11,7 @@ const SideNav: React.FC = () => {
 
     const navItems = [
         { name: 'Overview', href: '/', icon: BarChart3 },
-        { name: 'Explore', href: '/explore', icon: Compass },
+        { name: 'Wallets', href: '/wallets', icon: Compass },
         { name: 'Rewards', href: '/rewards', icon: Gift },
     ]
 
@@ -30,7 +30,7 @@ const SideNav: React.FC = () => {
                     <div className="block md:hidden absolute top-8 cursor-pointer right-8" onClick={(): void => ((setIsSidebarOpen(false)))}>x</div>
                     <div className="flex items-center mb-8">
                         <Wallet className="text-purple-500 w-8 h-8 mr-2" />
-                        <h1 className="text-2xl font-bold text-white">NexusFi</h1>
+                        <h1 className="text-2xl font-bold text-white">NexFi</h1>
                     </div>
                     <nav className="flex-grow">
                         <ul className="space-y-2">
