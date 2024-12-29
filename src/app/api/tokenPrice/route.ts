@@ -1,6 +1,6 @@
 module.exports = async function fetchTokenPrices(params: { token: string }) {
   const address = params.token || "";
-  const price: any = 0;
+  const price: number = 0;
 
   try {
     const response = await fetch(
