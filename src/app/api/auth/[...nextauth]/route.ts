@@ -14,7 +14,7 @@ const handler = NextAuth({
         signature: { label: "Signature", type: "text" },
         message: { label: "Message", type: "text" },
       },
-      authorize: async (credentials: any) => {
+      authorize: async (credentials: {walletAddress: string, signature: string, message: string}) => {
         try {
           const { walletAddress, signature, message } = credentials;
 
