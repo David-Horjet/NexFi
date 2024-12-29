@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-const web3 = require('@solana/web3.js');
+// import web3 from '@solana/web3.js';
 
 const WalletAssets: React.FC = () => {
-  const wallet = useSelector((state: any) => state.wallet); // Assuming wallet.address contains the public key
-  const [tokens, setTokens] = useState<any[]>([]);
+  const wallet = useSelector((state: {address: string}) => state.wallet); // Assuming wallet.address contains the public key
+  const [tokens, setTokens] = useState([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   // Utility to fetch token metadata and pricing
@@ -15,7 +15,7 @@ const WalletAssets: React.FC = () => {
       // Fetch token metadata using Solana Token List
       const tokenList = await fetch('https://cdn.jsdelivr.net/gh/solana-labs/token-list@main/src/tokens/solana.tokenlist.json');
       const { tokens } = await tokenList.json();
-      const tokenInfo = tokens.find((token: any) => token.address === mintAddress);
+      const tokenInfo = tokens.find((token: {address: string}) => token.address === mintAddress);
 
       // Fetch price data (e.g., from CoinGecko)
       const priceResponse = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${mintAddress}`);
@@ -57,7 +57,7 @@ const WalletAssets: React.FC = () => {
         );
 
         const assets = await Promise.all(
-          tokenAccounts.value.map(async (tokenAccountInfo: any) => {
+          tokenAccounts.value.map(async (tokenAccountInfo) => {
             const accountData = tokenAccountInfo.account.data.parsed.info;
             const mintAddress = accountData.mint;
             const balance = accountData.tokenAmount.uiAmount || 0;
