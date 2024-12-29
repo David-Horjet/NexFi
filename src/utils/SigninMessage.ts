@@ -8,10 +8,10 @@ type SignMessage = {
 };
 
 export class SigninMessage {
-  domain: any;
-  publicKey: any;
-  nonce: any;
-  statement: any;
+  domain: string;
+  publicKey: string;
+  nonce: string;
+  statement: string;
 
   constructor({ domain, publicKey, nonce, statement }: SignMessage) {
     this.domain = domain;
