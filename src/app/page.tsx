@@ -26,7 +26,7 @@ export default function Home() {
           <div className="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-md">
             <BarChart2 className="w-12 h-12 mb-4 text-green-300" />
             <h2 className="text-2xl font-semibold mb-2">Real-Time Analytics</h2>
-            <p>Get up-to-the-minute updates and insights on your portfolio's performance.</p>
+            <p>Get up to the minute updates and insights on your portfolio performance.</p>
           </div>
           <div className="bg-white bg-opacity-10 p-6 rounded-lg backdrop-blur-md">
             <Zap className="w-12 h-12 mb-4 text-blue-300" />
