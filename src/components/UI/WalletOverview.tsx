@@ -39,17 +39,6 @@ const WalletOverview: React.FC = () => {
   const [totalChange24h, setTotalChange24h] = useState<number>(0);
   const [portfolioLoading, setPortfolioLoading] = useState<boolean>(false);
 
-  const fetchTokenBalances = async (publicKey: PublicKey) => {
-    // This is a simplified example. In a real-world scenario, you'd need to use a token program
-    // to fetch all token balances associated with the wallet.
-    const solBalance = await connection.getBalance(publicKey);
-    const tokenBalances: TokenBalance[] = [
-      { mint: 'SOL', balance: solBalance / 1e9, price: 0, change24h: 0 },
-      // Add other tokens here
-    ];
-    return tokenBalances;
-  };
-
   console.log(portfolioName);
   const walletAddress = publicKey ? publicKey.toBase58() : ""
 
@@ -57,65 +46,79 @@ const WalletOverview: React.FC = () => {
   if (portfolioName) {
     useEffect(() => {
       const initializePortfolio = async () => {
-        console.log("I'm fetching");
-
-        setPortfolioLoading(true)
+        console.log("Fetching portfolio data...");
+      
+        setPortfolioLoading(true);
         try {
           const response = await getPortfolioBalances({
             portfolioName,
           });
-          console.log("response", response);
+          console.log("Portfolio Response:", response);
+      
           if (response.success) {
-            const tokenResponse = await fetchTokens({ walletAddress: response.data ? response.data[0].address : walletAddress })
-            console.log("tokenResponse", tokenResponse)
+            const walletAddress = response.data ? response.data[0].address : "";
+            const tokenResponse = await fetchTokens({ walletAddress });
+            console.log("Token Response:", tokenResponse);
+      
             if (tokenResponse.success) {
               const jupListResponse = await fetchJupList();
-              console.log("jupListResponse", jupListResponse);
+              console.log("Jupiter List Response:", jupListResponse);
+      
               if (jupListResponse.success) {
+                // Step 1: Fetch SOL balance
+                const solBalance = response.data[0].solBalance || 0; // Assuming SOL balance is returned
+                const solPriceResponse = await fetchSolPrice();
+                const solPrice = solPriceResponse.success ? solPriceResponse.data.solana.usd : 0;
+                const solValue = solBalance * solPrice;
+      
+                console.log("SOL Balance:", solBalance, "SOL Price:", solPrice, "SOL Value:", solValue);
+      
+                // Step 2: Fetch and calculate token values
                 const assets = await Promise.all(
                   tokenResponse.data.tokens.map(async (tokenAccountInfo: any) => {
                     const accountData = tokenAccountInfo.account.data.parsed.info;
                     const tokenMintAddress = accountData.mint;
                     const tokenBalance = accountData.tokenAmount.uiAmount || 0;
-
-                    // const mintInfo = jupListResponse.data?.find((jupToken: { address: string }) => jupToken.address === tokenMintAddress);
-
-                    // Fetch token metadata and price
-                    const tokenData = await fetchTokenData(tokenMintAddress) || 0;
-                    const tokenPrice = Number(tokenData.priceUsd) || 0
+      
+                    const tokenData = await fetchTokenData(tokenMintAddress) || {};
+                    const tokenPrice = Number(tokenData.priceUsd) || 0;
                     const tokenValue = tokenBalance * tokenPrice;
-                    // console.log("tokenData", tokenBalance, tokenData, tokenPrice, tokenValue)
-
+      
                     return {
                       mintAddress: tokenMintAddress,
-                      name: tokenData?.baseToken?.name || "Unknown token",
-                      symbol: tokenData?.baseToken?.symbol || "Unknown token",
-                      imageUrl: tokenData?.info?.imageUrl || "Unknown token",
-                      priceChange: tokenData?.priceChange || null,
-                      url: tokenData?.url || "",
+                      name: tokenData?.baseToken?.name || "Unknown Token",
+                      symbol: tokenData?.baseToken?.symbol || "Unknown",
+                      imageUrl: tokenData?.info?.imageUrl || "",
                       balance: tokenBalance,
-                      price: Number(tokenPrice),
+                      price: tokenPrice,
                       value: tokenValue,
-                      roi: `${((tokenValue - tokenBalance) / tokenBalance).toFixed(2)}%`, // Example ROI calculation
                     };
                   })
                 );
-                console.log("assets", assets)
-                const totalValue = await calculatePortfolioValue(assets);
-                console.log("totalValue", totalValue)
-                // setPortfolio({
-                //   splTokens: jupListResponse.data,
-                //   totalValue,
-                // });
+      
+                console.log("Assets:", assets);
+      
+                // Step 3: Calculate total portfolio value
+                const tokenPortfolioValue = await calculatePortfolioValue(assets);
+                const totalPortfolioValue = solValue + tokenPortfolioValue;
+      
+                console.log("Total Portfolio Value:", totalPortfolioValue);
+      
+                setPortfolio({
+                  solValue,
+                  tokenAssets: assets,
+                  totalValue: totalPortfolioValue,
+                });
               }
             }
           }
-          setPortfolioLoading(false)
         } catch (error) {
-          console.error('Error fetching portfolio data:', error);
-          setPortfolioLoading(false)
+          console.error("Error fetching portfolio data:", error);
+        } finally {
+          setPortfolioLoading(false);
         }
       };
+      
 
       initializePortfolio();
 
