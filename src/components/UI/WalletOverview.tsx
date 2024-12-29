@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Connection, PublicKey } from '@solana/web3.js';
-import { setWallet } from '@/features/wallet/walletSlice';
-import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
-import { useNetworkConnection } from '@/hooks/useNetwork';
+import { useSelector } from 'react-redux';
+// import { Connection, PublicKey } from '@solana/web3.js';
+// import { setWallet } from '@/features/wallet/walletSlice';
+// import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+// import { useNetworkConnection } from '@/hooks/useNetwork';
 import { processStreamEvent } from '@/utils/blockchain/streamHandler';
 import { setPortfolio } from '@/features/portfolio/portfolioSlice';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
@@ -28,15 +28,15 @@ interface WalletState {
 }
 
 const WalletOverview: React.FC = () => {
-  const dispatch = useDispatch();
-  const { connected, publicKey, disconnect } = useWallet();
-  const { connection, network } = useNetworkConnection();
+  // const dispatch = useDispatch();
+  const { publicKey, disconnect } = useWallet();
+  // const { connection, network } = useNetworkConnection();
   const wallet = useSelector((state: { wallet: WalletState }) => state.wallet);
 
   const portfolioName = usePortfolioName();
 
   const [totalValue, setTotalValue] = useState<number>(0);
-  const [totalChange24h, setTotalChange24h] = useState<number>(0);
+  // const [totalChange24h, setTotalChange24h] = useState<number>(0);
   const [portfolioLoading, setPortfolioLoading] = useState<boolean>(false);
 
   console.log(portfolioName);
