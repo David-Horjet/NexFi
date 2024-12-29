@@ -7,7 +7,7 @@ import { Bricolage_Grotesque } from "next/font/google";
 // import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 // import { clusterApiUrl } from "@solana/web3.js";
 // import { useMemo } from "react";
-import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
+// import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
 // import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
 import { NextAuthProvider } from "@/components/NextAuthProvider/NextAuthProvider";
