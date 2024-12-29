@@ -2,18 +2,18 @@
 
 import { createPortfolio, updatePortfolio } from "@/actions/quicknode.actions";
 import { setPortfolio } from "@/features/portfolio/portfolioSlice";
-import { RootState } from "@/store/store";
+// import { RootState } from "@/store/store";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 export default function Home() {
     const { publicKey, signMessage } = useWallet();
 
     const router = useRouter();
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
