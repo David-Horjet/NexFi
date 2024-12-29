@@ -1,12 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { RootState } from '@/store/store';
 import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import bs58 from 'bs58';
 import { setWallet } from '@/features/wallet/walletSlice';
 import { toast } from 'sonner';
@@ -17,8 +15,7 @@ export default function Home() {
     const { publicKey, signMessage, connected } = useWallet();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-    const { data: session, status } = useSession();
+    
     const wallet = useWallet();
 
     // if (publicKey) {
