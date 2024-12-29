@@ -50,7 +50,7 @@ export const useBlockchainData = (
         loading: false,
         error: null,
       });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error fetching blockchain data:", error);
       setData((prev) => ({
         ...prev,
