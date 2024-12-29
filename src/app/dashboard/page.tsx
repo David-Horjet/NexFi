@@ -1,4 +1,4 @@
-import History from "@/components/UI/History";
+// import History from "@/components/UI/History";
 // import WalletModal from "@/components/UI/Modals/WalletModal";
 import PerformanceChart from "@/components/UI/PerformanceChart";
 import WalletAssets from "@/components/UI/WalletAssets";
@@ -13,7 +13,7 @@ export default function Home() {
         <WalletOverview />
         <div className="grid">
           <PerformanceChart />
-          <History />
+          
         </div>
         <WalletAssets />
       </section>
