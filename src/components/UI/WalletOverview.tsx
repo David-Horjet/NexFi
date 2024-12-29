@@ -29,7 +29,7 @@ interface WalletState {
 
 const WalletOverview: React.FC = () => {
   // const dispatch = useDispatch();
-  const { publicKey } = useWallet();
+  // const { publicKey } = useWallet();
   // const { connection, network } = useNetworkConnection();
   const wallet = useSelector((state: { wallet: WalletState }) => state.wallet);
 
