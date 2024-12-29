@@ -35,7 +35,7 @@ export function abbreviateAddress(
 
 export async function calculatePortfolioValue(
   tokens: Tokens[]
-): Promise<any> {
+) {
   let totalValue = 0;
 
   for (const token of tokens) {
