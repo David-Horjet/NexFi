@@ -26,7 +26,7 @@ export const useNetworkConnection = () => {
     if (network in endpoints) {
       setConnection(new Connection(endpoints[network]));
     }
-  }, [network]);
+  }, [network, endpoints]);
 
   return { network, setNetwork, connection };
 };
