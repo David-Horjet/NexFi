@@ -5,8 +5,8 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { useSelector } from "react-redux";
 
 const History: React.FC = () => {
-  const [historyItems, setHistoryItems] = useState<any[]>([]);
-  const wallet = useSelector((state: any) => state.wallet);
+  const [historyItems, setHistoryItems] = useState([]);
+  const wallet = useSelector((state: {address: string}) => state.wallet);
   const walletAddress = wallet?.address;
 
   const connection = new Connection(
@@ -26,11 +26,11 @@ const History: React.FC = () => {
         const amount =
           meta?.postTokenBalances?.[0]?.uiTokenAmount?.uiAmount || 0;
         const application = instructions
-          ?.map((inst: any) => inst.programId.toBase58())
+          ?.map((inst) => inst.programId.toBase58())
           ?.join(", ") || "Unknown Application";
         const status = meta?.err ? "Failed" : "Success";
         const type = instructions.some(
-          (i: any) =>
+          (i) =>
             i.programId.toBase58() ===
             "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         )
@@ -54,7 +54,7 @@ const History: React.FC = () => {
         };
       }
     } catch (error) {
-      // console.error(`Failed to fetch transaction details for ${signature}:`, error);
+      console.error(`Failed to fetch transaction details for ${signature}:`, error);
       return null;
     }
   };
@@ -75,14 +75,14 @@ const History: React.FC = () => {
 
         setHistoryItems(detailedHistory.filter(Boolean)); // Remove null items
       } catch (error) {
-        // console.error("Failed to fetch history:", error);
+        console.error("Failed to fetch history:", error);
       }
     };
 
     if (walletAddress) {
       fetchTransactionHistory();
     }
-  }, [connection, walletAddress]);
+  }, [connection, walletAddress, fetchTransactionDetails]);
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-md mt-6">
