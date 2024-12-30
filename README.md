@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🚀 Solana Portfolio Tracker
 
-## Getting Started
+A real-time portfolio tracker for Solana wallets, built using Next.js, TypeScript, and powered by QuickNode Streams, Functions, and Key-Value Store.
 
-First, run the development server:
+This project provides up-to-date portfolio balances, token prices, and real-time transaction tracking for your Solana wallet.
 
-```bash
+
+---
+
+🛠 Features
+
+Real-time updates with QuickNode Streams for wallet transactions.
+
+Dynamic token pricing fetched using QuickNode Functions and Dex APIs.
+
+Integrated SOL value tracking with live price updates.
+
+Optimized performance with Key-Value Store for caching token metadata and prices.
+
+Sleek, easy-to-use UI built with Next.js and TypeScript.
+
+
+
+---
+
+🏗️ Getting Started
+
+Follow these steps to run the project locally:
+
+Prerequisites
+
+1. Node.js (>=16.x)
+
+
+2. npm or yarn
+
+
+3. A QuickNode account (get started here).
+
+
+
+Clone the Repository
+
+git clone https://github.com/your-username/solana-portfolio-tracker.git  
+cd solana-portfolio-tracker
+
+Install Dependencies
+
+Using npm:
+
+npm install
+
+Or yarn:
+
+yarn install
+
+Set Up Environment Variables
+
+Create a .env.local file in the root directory and add the following variables:
+
+NEXT_PUBLIC_SOLANA_RPC_URL="your quicknode Solana RPC URL"  
+NEXT_PUBLIC_QUICKNODE_FUNCTION_RPC_URL="your quicknode function RPC URL"  
+NEXT_PUBLIC_QUICKNODE_FUNCTION_API_KEY="your quicknode function API key"  
+NEXTAUTH_URL="http://localhost:3000"  
+NEXTAUTH_SECRET="your next-auth secret"
+
+Replace the placeholders with your QuickNode details and secure secrets.
+
+
+---
+
+🚀 Running the App
+
+Start the development server:
+
+Using npm:
+
 npm run dev
-# or
+
+Using yarn:
+
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will run at http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+🛠️ Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Connect a Wallet: Enter a Solana wallet address.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Track Tokens: The app will fetch token balances, prices, and values.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Real-Time Updates: Watch as transactions update your portfolio in real time.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+---
+
+🤝 Contributions
+
+Contributions are welcome! Open issues, fork the repository, and submit PRs to help improve this project.
+
+
+---
+
+💬 Support
+
+If you have questions or need help, feel free to open an issue or reach out to me on Twitter (@YourTwitterHandle).
+
+
+---
+
