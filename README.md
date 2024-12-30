@@ -41,7 +41,7 @@ Prerequisites
 
 Clone the Repository
 
-git clone https://github.com/your-username/solana-portfolio-tracker.git  
+git clone https://github.com/David-Horjet/NexFi.git  
 cd solana-portfolio-tracker
 
 Install Dependencies
