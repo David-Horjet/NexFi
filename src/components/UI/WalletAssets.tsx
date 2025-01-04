@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-// import web3 from '@solana/web3.js';
+import web3 from '@solana/web3.js';
 
 const WalletAssets: React.FC = () => {
   const wallet = useSelector((state: {address: string}) => state.wallet); // Assuming wallet.address contains the public key

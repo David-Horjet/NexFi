@@ -36,53 +36,52 @@ const WalletOverview: React.FC = () => {
   const portfolioName = usePortfolioName();
 
   const [totalValue, setTotalValue] = useState<number>(0);
-  // const [totalChange24h, setTotalChange24h] = useState<number>(0);
+  const [totalChange24h, setTotalChange24h] = useState<number>(0);
   const [portfolioLoading, setPortfolioLoading] = useState<boolean>(false);
 
   console.log(portfolioName);
 
-
- // if (portfolioName) {
-    useEffect(() => {
+  useEffect(() => {
+    if (portfolioName) {
       const initializePortfolio = async () => {
         console.log("Fetching portfolio data...");
-      
+
         setPortfolioLoading(true);
         try {
           const response = await getPortfolioBalances({
             portfolioName,
           });
           console.log("Portfolio Response:", response);
-      
+
           if (response.success) {
             const walletAddress = response.data ? response.data[0].address : "";
             const tokenResponse = await fetchTokens({ walletAddress });
             console.log("Token Response:", tokenResponse);
-      
+
             if (tokenResponse.success) {
               const jupListResponse = await fetchJupList();
               console.log("Jupiter List Response:", jupListResponse);
-      
+
               if (jupListResponse.success) {
                 // Step 1: Fetch SOL balance
                 // const solBalance = response.data[0].solBalance || 0; // Assuming SOL balance is returned
                 // const solPriceResponse = await fetchSolPrice();
                 // const solPrice = solPriceResponse.success ? solPriceResponse.data.solana.usd : 0;
                 // const solValue = solBalance * solPrice;
-      
+
                 // console.log("SOL Balance:", solBalance, "SOL Price:", solPrice, "SOL Value:", solValue);
-      
+
                 // Step 2: Fetch and calculate token values
                 const assets = await Promise.all(
                   tokenResponse.data.tokens.map(async (tokenAccountInfo) => {
                     const accountData = tokenAccountInfo.account.data.parsed.info;
                     const tokenMintAddress = accountData.mint;
                     const tokenBalance = accountData.tokenAmount.uiAmount || 0;
-      
+
                     const tokenData = await fetchTokenData(tokenMintAddress) || {};
                     const tokenPrice = Number(tokenData.priceUsd) || 0;
                     const tokenValue = tokenBalance * tokenPrice;
-      
+
                     return {
                       mintAddress: tokenMintAddress,
                       name: tokenData?.baseToken?.name || "Unknown Token",
@@ -94,17 +93,17 @@ const WalletOverview: React.FC = () => {
                     };
                   })
                 );
-      
+
                 console.log("Assets:", assets);
-      
+
                 // Step 3: Calculate total portfolio value
                 const tokenPortfolioValue = await calculatePortfolioValue(assets);
                 const totalPortfolioValue = 0 + tokenPortfolioValue;
 
                 setTotalValue(totalPortfolioValue);
-      
+
                 console.log("Total Portfolio Value:", totalPortfolioValue);
-      
+
                 {/* setPortfolio({
                   solValue,
                   tokenAssets: assets,
@@ -119,7 +118,7 @@ const WalletOverview: React.FC = () => {
           setPortfolioLoading(false);
         }
       };
-      
+
 
       initializePortfolio();
 
@@ -137,8 +136,9 @@ const WalletOverview: React.FC = () => {
       eventSource.onmessage = (e) => handleStreamEvent(JSON.parse(e.data));
 
       return () => eventSource.close();
-    }, [wallet.address, portfolioName]);
- // }
+
+    }
+  }, [wallet.address, portfolioName])
 
 
   return (
