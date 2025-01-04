@@ -2,7 +2,7 @@
  * Process a webhook event received from QuickNode Stream.
  * @param event - The event payload.
  */
-export const processStreamEvent = (event) => {
+export const processStreamEvent = (event: any) => {
   try {
     // Extract and log event details
     console.log("Stream Event Received:", event);

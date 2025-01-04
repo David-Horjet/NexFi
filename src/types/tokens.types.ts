@@ -3,7 +3,7 @@ export interface Tokens {
   name: string;
   symbol: string;
   imageUrl: string;
-  priceChange
+  priceChange: number
   url: string;
   balance: number;
   price: number;
