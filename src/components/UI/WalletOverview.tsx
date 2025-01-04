@@ -6,7 +6,7 @@ import { processStreamEvent } from '@/utils/blockchain/streamHandler';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { usePortfolioName } from '@/hooks/usePortfolioName';
 import { getPortfolioBalances } from '@/actions/quicknode.actions';
-import { fetchJupList, fetchSolPrice, fetchTokenData, fetchTokens } from '@/actions/tokens.action';
+import { fetchSolPrice, fetchTokenData, fetchTokens } from '@/actions/tokens.action';
 import { calculatePortfolioValue } from '@/utils/helpers';
 
 interface TokenBalance {
