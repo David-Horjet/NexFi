@@ -106,7 +106,12 @@ const WalletOverview: React.FC = () => {
 
       initializePortfolio();
 
-      const handleStreamEvent = (event: { type: string; }) => {
+      const handleStreamEvent = (event: {
+        type: string;
+        amount: string;
+        from: string;
+        to: string;
+      }) => {
         processStreamEvent(event);
         if (event.type === 'TRANSFER') {
           initializePortfolio();
