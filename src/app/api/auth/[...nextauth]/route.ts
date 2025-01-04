@@ -52,17 +52,17 @@ const handler = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.wallet = user.wallet; // Add wallet address to the token
+        token.wallet = user.wallet || null; // Ensure token.wallet is null if user.wallet is undefined
       }
       return token;
     },
     async session({ session, token }) {
-      if (token?.wallet) {
+      if (typeof token.wallet === "string") {
         session.user.wallet = token.wallet; // Add wallet address to the session
       }
       return session;
     },
-  },
+  },  
 });
 
 export { handler as GET, handler as POST };
