@@ -1,11 +1,11 @@
-import NextAuth from "next-auth";
+import { auth } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
 
 console.log("NextAuth API route loaded");
 
-const handler = NextAuth({
+const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Solana Wallet",
@@ -14,7 +14,7 @@ const handler = NextAuth({
         signature: { label: "Signature", type: "text" },
         message: { label: "Message", type: "text" },
       },
-      authorize: async (credentials: {walletAddress: string, signature: string, message: string}) => {
+      authorize: async (credentials) => {
         try {
           const { walletAddress, signature, message } = credentials;
 
@@ -27,7 +27,11 @@ const handler = NextAuth({
 
           if (isValid) {
             // If valid, return the user object
-            return { id: walletAddress, name: `User-${walletAddress}`, wallet: walletAddress };
+            return {
+              id: walletAddress,
+              name: `User-${walletAddress}`,
+              wallet: walletAddress,
+            };
           }
 
           return null; // Invalid signature
@@ -55,6 +59,7 @@ const handler = NextAuth({
       return session;
     },
   },
-});
+};
 
-export { handler as GET, handler as POST}
+export const GET = auth(authOptions);
+export const POST = auth(authOptions);
