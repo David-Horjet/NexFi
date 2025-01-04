@@ -14,10 +14,14 @@ const handler = NextAuth({
         signature: { label: "Signature", type: "text" },
         message: { label: "Message", type: "text" },
       },
-      authorize: async (credentials: {walletAddress: string, signature: string, message: string}) => {
-        try {
-          const { walletAddress, signature, message } = credentials;
+      authorize: async (credentials) => {
+        if (!credentials) {
+          return null; // Handle missing credentials
+        }
 
+        const { walletAddress, signature, message } = credentials;
+
+        try {
           // Verify the signature using nacl
           const isValid = nacl.sign.detached.verify(
             new TextEncoder().encode(message),
@@ -27,7 +31,11 @@ const handler = NextAuth({
 
           if (isValid) {
             // If valid, return the user object
-            return { id: walletAddress, name: `User-${walletAddress}`, wallet: walletAddress };
+            return {
+              id: walletAddress,
+              name: `User-${walletAddress}`,
+              wallet: walletAddress,
+            };
           }
 
           return null; // Invalid signature
@@ -49,7 +57,7 @@ const handler = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      if (token?.wallet && typeof token.wallet === "string") {
+      if (token?.wallet) {
         session.user.wallet = token.wallet; // Add wallet address to the session
       }
       return session;
@@ -57,4 +65,4 @@ const handler = NextAuth({
   },
 });
 
-export { handler as GET, handler as POST}
+export { handler as GET, handler as POST };
