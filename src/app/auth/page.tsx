@@ -52,7 +52,7 @@ export default function Home() {
             } else {
                 toast.error('Failed to sign in. Please try again.');
             }
-        } catch (error: {message: string}) {
+        } catch (error) {
             console.log('Error signing in:', error);
             toast.error(error ? error.message : "Something went wrong")
         } finally {
