@@ -11,11 +11,11 @@ export default function Home() {
       <section className="h-full overflow-y-auto">
         {/* <WalletModal /> */}
         <WalletOverview />
-        <div className="grid">
+        {/* <div className="grid">
           <PerformanceChart />
           
-        </div>
-        <WalletAssets />
+        </div> */}
+        {/* <WalletAssets /> */}
       </section>
     </WalletContextProvider>
   );

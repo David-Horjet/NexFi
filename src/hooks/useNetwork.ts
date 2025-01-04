@@ -6,7 +6,7 @@ export const useNetworkConnection = () => {
     "mainnet"
   );  
 
-  console.log(network);
+  // console.log(network);
   
 
   const endpoints: Record<"mainnet" | "devnet" | "testnet", string> = {

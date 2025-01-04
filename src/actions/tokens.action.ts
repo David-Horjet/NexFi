@@ -51,7 +51,7 @@ export async function fetchJupList() {
 
 export async function fetchSolPrice() {
   try {
-    const response = await fetch(`'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true'`, {
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd&include_24hr_change=true`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

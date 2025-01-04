@@ -16,7 +16,7 @@ export const usePortfolioName = () => {
     if (!isInitialized.current) {
       const handlePortfolioNameChange = () => {
         const portfolioName = localStorage.getItem("portfolioName");
-        console.log("Token change detected:", portfolioName);
+        // console.log("Token change detected:", portfolioName);
         setPortfolioName(portfolioName);
       };
 

@@ -1,16 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Bell, ChevronDown } from 'lucide-react';
-import { useNetworkConnection } from '@/hooks/useNetwork';
+import {
+    Search, Bell,
+    // ChevronDown 
+} from 'lucide-react';
+// import { useNetworkConnection } from '@/hooks/useNetwork';
 
-type BalanceUnit = 'USD' | 'ETH' | 'BTC';
+// type BalanceUnit = 'USD' | 'ETH' | 'BTC';
 
 const TopNav: React.FC = () => {
-    const [balanceUnit, setBalanceUnit] = useState<BalanceUnit>('USD');
-    const { network, setNetwork } = useNetworkConnection();
-    const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
-    const [isBalanceUnitDropdownOpen, setIsBalanceUnitDropdownOpen] = useState(false);
+    // const [balanceUnit, setBalanceUnit] = useState<BalanceUnit>('USD');
+    // const { network, setNetwork } = useNetworkConnection();
+    // const [isNetworkDropdownOpen, setIsNetworkDropdownOpen] = useState(false);
+    // const [isBalanceUnitDropdownOpen, setIsBalanceUnitDropdownOpen] = useState(false);
     const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
 
     return (
@@ -29,7 +32,7 @@ const TopNav: React.FC = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <div className="relative hidden md:block">
+                        {/* <div className="relative hidden md:block">
                             <button
                                 onClick={() => setIsNetworkDropdownOpen(!isNetworkDropdownOpen)}
                                 aria-expanded={isNetworkDropdownOpen}
@@ -79,7 +82,7 @@ const TopNav: React.FC = () => {
                                     ))}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
                         <button className="p-2 rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500">
                             <Bell className="h-5 w-5" />
