@@ -15,7 +15,7 @@ export default function Home() {
     const { publicKey, signMessage, connected } = useWallet();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    
+
     const wallet = useWallet();
 
     // if (publicKey) {
@@ -52,10 +52,16 @@ export default function Home() {
             } else {
                 toast.error('Failed to sign in. Please try again.');
             }
-        } catch (error: any) {
-            console.log('Error signing in:', error);
-            toast.error(error ? error.message : "Something went wrong")
-        } finally {
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                console.log('Error signing in:', error.message);
+                toast.error(error.message);
+            } else {
+                console.log('Error signing in:', error);
+                toast.error("Something went wrong");
+            }
+        }
+        finally {
             setIsLoading(false);
         }
     };

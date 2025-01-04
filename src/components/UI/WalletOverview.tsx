@@ -17,6 +17,21 @@ interface TokenBalance {
   change24h: number;
 }
 
+interface TokenMetaData {
+  account: {
+    data: {
+      parsed: {
+        info: {
+          mint: string
+          tokenAmount: {
+            uiAmount: number
+          }
+        }
+      }
+    }
+  }
+}
+
 interface WalletState {
   address: string;
   tokens: TokenBalance[];
@@ -52,7 +67,7 @@ const WalletOverview: React.FC = () => {
               const solValue = solBalance * solPrice;
 
               const assets = await Promise.all(
-                tokenResponse.data.tokens.map(async (tokenAccountInfo: any) => {
+                tokenResponse.data.tokens.map(async (tokenAccountInfo: TokenMetaData) => {
                   const accountData = tokenAccountInfo.account.data.parsed.info;
                   const tokenMintAddress = accountData.mint;
                   const tokenBalance = accountData.tokenAmount.uiAmount || 0;
@@ -91,14 +106,14 @@ const WalletOverview: React.FC = () => {
 
       initializePortfolio();
 
-      const handleStreamEvent = (event: { type: string; data: any }) => {
+      const handleStreamEvent = (event: { type: string; }) => {
         processStreamEvent(event);
         if (event.type === 'TRANSFER') {
           initializePortfolio();
         }
       };
 
-      const eventSource = new EventSource('/api/streams');
+      const eventSource = new EventSource('/api/webhook');
       eventSource.onmessage = (e) => handleStreamEvent(JSON.parse(e.data));
 
       return () => eventSource.close();
@@ -115,17 +130,15 @@ const WalletOverview: React.FC = () => {
                 <p className="text-sm font-medium text-gray-500">Total Portfolio Value</p>
                 <p className="text-3xl py-2 text-gray-100">${totalValue.toFixed(2)}</p>
                 <p
-                  className={`text-sm ${
-                    totalChange24h >= 0 ? 'text-green-400' : 'text-red-400'
-                  }`}
+                  className={`text-sm ${totalChange24h >= 0 ? 'text-green-400' : 'text-red-400'
+                    }`}
                 >
                   24h Change: {totalChange24h.toFixed(2)}%
                 </p>
               </div>
               <div
-                className={`flex items-center gap-1 text-2xl ${
-                  totalChange24h >= 0 ? 'text-green-400' : 'text-red-400'
-                }`}
+                className={`flex items-center gap-1 text-2xl ${totalChange24h >= 0 ? 'text-green-400' : 'text-red-400'
+                  }`}
               >
                 {totalChange24h >= 0 ? <ArrowUpRight size={30} /> : <ArrowDownRight size={30} />}
                 {totalChange24h.toFixed(2)}%
