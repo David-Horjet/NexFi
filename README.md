@@ -110,7 +110,7 @@ Contributions are welcome! Open issues, fork the repository, and submit PRs to h
 
 💬 Support
 
-If you have questions or need help, feel free to open an issue or reach out to me on Twitter (@YourTwitterHandle).
+If you have questions or need help, feel free to open an issue or reach out to me on Twitter (@david_horjet).
 
 
 ---
